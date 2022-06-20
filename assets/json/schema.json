@@ -1,0 +1,14 @@
+
+{
+    "@context":"https://schema.org",
+    "@type": "WebPage",
+    "name": "MeteoMDR",
+    "description": "Il sito ti permette di scoprire in tempo reale le condizioni meteo nelle più belle città del globo",
+    "publisher": {
+        "@type": "Person",
+        "name": "Matteo Della Ragione"
+    },
+    "lastReviewed" : "16-11-2002",
+    "primaryImageOfPage" : "media/img/meteo.jpg",
+    "license": "http://creativecommons.org/licenses/by-nc-sa/3.0/us/deed.en_US"
+}
