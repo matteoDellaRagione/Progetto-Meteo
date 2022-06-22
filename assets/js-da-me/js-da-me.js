@@ -36,24 +36,16 @@ function darkmode(){
 	}
 }
 
-/*async function getCordinatesFromName(name) {
-	var response = await fetch("https://geocode.maps.co/search?q="+name,{method:"GET"});
-	let jsonObj = await response.json();
-	var lat = jsonObj[0].boundingbox[0];
-	var long = jsonObj[0].boundingbox[3];
-	console.log(lat)
-	console.log(long)
-}*/
+function getMeteo(citta) {
+	console.log(citta.weather[0].main)	
+	switch(citta.weather[0].main){
+		case 'Clouds': return 'Nuvoloso';
+		case 'Clear': return 'Soleggiato';
+		case 'Rain': return 'Piovoso'
 
-/*async function initialize() {
-	var response = await fetch("https://api.openweathermap.org/data/2.5/weather?lat=45,46362&lon=9,188116&units=metric&appid=e21c453d380f0ca1bc5d071698438e15",
-	{method:"GET"});
-	let jsonObj = await response.json();
-	document.getElementById('weather-Milan').innerText = "Temperatura: " + jsonObj.main.temp + "°";
-
+	}
 }
-initialize();*/
-//getCordinatesFromName("Firenze");
+
 if(window.localStorage.getItem('darkmode')=="true") { 
 	document.body.style.backgroundColor = 'black'
 	document.body.style.color = '#faf9f9'
@@ -61,7 +53,41 @@ if(window.localStorage.getItem('darkmode')=="true") {
 }
 const api = new Worker("js-da-me/api.js");
 api.onmessage = function(e) {
-	
-	document.getElementById('weather-Milan').innerText = "Temperatura: " + e.data.main.temp + "°";
+	console.log(e.data.dubai)
+	document.getElementById('weather-Milan').innerText = "Temperatura: " + e.data.milano.main.temp + "°\n"+getMeteo(e.data.milano);
+	document.getElementById('weather-Barcellona').innerText = "Temperatura: " + e.data.barcellona.main.temp + "°\n"+getMeteo(e.data.barcellona);
+	document.getElementById('weather-Dubai').innerText = "Temperatura: " + e.data.dubai.main.temp + "°\n"+getMeteo(e.data.dubai);
 }
-const ImageLoaderWorker = new Worker('js-da-me/images.js')
+
+const ImageLoaderWorker = new Worker('js-da-me/images.js') 
+
+const imgElements = document.querySelectorAll('img[data-src]')
+
+ImageLoaderWorker.addEventListener('message', event => {
+	// Grab the message data from the event
+	const imageData = event.data
+  
+	// Get the original element for this image
+	const imageElement = document.querySelector(`img[data-src='${imageData.imageURL}']`)  
+	// We can use the `Blob` as an image source! We just need to convert it
+	// to an object URL first
+	const objectURL = URL.createObjectURL(imageData.blob)
+  
+	// Once the image is loaded, we'll want to do some extra cleanup
+	imageElement.onload = () => {
+	  // Let's remove the original `data-src` attribute to make sure we don't
+	  // accidentally pass this image to the worker again in the future
+	  imageElement.removeAttribute("data-src")
+  
+	  // We'll also revoke the object URL now that it's been used to prevent the
+	  // browser from maintaining unnecessary references
+	  URL.revokeObjectURL(objectURL)
+	}
+  
+	imageElement.setAttribute('src', objectURL)
+  })
+
+imgElements.forEach(imageElement => {
+  const imageURL = imageElement.getAttribute('data-src')
+  ImageLoaderWorker.postMessage(imageURL)
+})

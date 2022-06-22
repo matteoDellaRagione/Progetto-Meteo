@@ -9,8 +9,19 @@ async function getCordinatesFromName(name) {
 async function initialize() {
 	var response = await fetch("https://api.openweathermap.org/data/2.5/weather?lat=45,46362&lon=9,188116&units=metric&appid=e21c453d380f0ca1bc5d071698438e15",
 	{method:"GET"});
-	let jsonObj = await response.json();
-	self.postMessage(jsonObj)
+	let jsonObj1 = await response.json();
+	response = await fetch("https://api.openweathermap.org/data/2.5/weather?lat=41,3875&lon=2,16835&units=metric&appid=e21c453d380f0ca1bc5d071698438e15",
+	{method:"GET"});
+	let jsonObj2 = await response.json();
+	response = await fetch("https://api.openweathermap.org/data/2.5/weather?lat=25,20498&lon=55,271057&units=metric&appid=e21c453d380f0ca1bc5d071698438e15",
+	{method:"GET"});
+	let jsonObj3 = await response.json();
+	response = {
+		milano:jsonObj1,
+		barcellona:jsonObj2,
+		dubai:jsonObj3,
+	}
+	self.postMessage(response)
 
 }
 self.onmessage = getCordinatesFromName("firenze")
