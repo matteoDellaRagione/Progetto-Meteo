@@ -23,6 +23,10 @@ function darkmode(){
 		console.log(darkSelector.darkMode);
 		console.log(darkSelector.day)
 		window.localStorage.setItem("darkmode",darkSelector.darkMode);
+		if(document.getElementById('floatingInput')) {
+			console.log(document.getElementById('floatingInput'))
+			document.getElementById('form').style.color = "black"
+		}
 	}
 	else {document.body.style.backgroundColor = "white";
 		  document.body.style.color = '#22333b'
@@ -41,7 +45,8 @@ function getMeteo(citta) {
 	switch(citta.weather[0].main){
 		case 'Clouds': return 'Nuvoloso';
 		case 'Clear': return 'Soleggiato';
-		case 'Rain': return 'Piovoso'
+		case 'Rain': return 'Piovoso';
+		default: return 'Nevoso'
 
 	}
 }
@@ -49,7 +54,11 @@ function getMeteo(citta) {
 if(window.localStorage.getItem('darkmode')=="true") { 
 	document.body.style.backgroundColor = 'black'
 	document.body.style.color = '#faf9f9'
-	document.getElementById('darkmode').checked = true	
+	document.getElementById('darkmode').checked = true
+	if(document.getElementById('floatingInput')) {
+		console.log(document.getElementById('floatingInput'))
+		document.getElementById('form').style.color = "black"
+	}	
 }
 const api = new Worker("js-da-me/api.js");
 api.onmessage = function(e) {

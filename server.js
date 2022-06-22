@@ -5,11 +5,11 @@ require('dotenv').config()
 const mongoClient = new MongoClient(process.env.mongoDB_api)
 const bodyparser = require('body-parser')
 
-
+const app = express();
  //Configure dotenv package
  require("dotenv").config();
+ require('./router/main')(app);
 
-const app = express();
 app.set('view engine', 'ejs')
 const port = 8080;
 
@@ -17,19 +17,6 @@ const port = 8080;
 
 //Express static file module
 app.use(express.static(__dirname + '/assets/'));
-
-app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname, '/views/index.html'));
-});
-
-app.get('/index', function (req, res) {
-	"use strict";
-    res.sendFile(path.join(__dirname, '/views/index.html'));
-});
-
-app.get('/ciao', function (req, res) {
-    res.render('ciao.ejs');
-});
 
 app.post('/auth', bodyparser.urlencoded(), (req,res) => {
     console.log(req.body);
