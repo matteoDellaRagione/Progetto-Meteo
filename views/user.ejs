@@ -57,16 +57,12 @@
             <a class="nav-link active" aria-current="page" href="/aboutus">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" action="/ciao" method="GET" href="/help">Cosa puoi fare</a>
+            <a class="nav-link active" method="GET" href="/help">Cosa puoi fare</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/login">Accedi/Registrati</a>
+            <a class="nav-link active" aria-current="page" href="#">Benvenuto, <%= nome %></a>
           </li>
         </ul>
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
       </div>
     </div>
   </nav> 
@@ -127,25 +123,16 @@
   <div class="container marketing">
 
     <!-- Three columns of text below the carousel -->
-    <div class="row">
-      <div class="col-lg-4">
-        <img data-src="/media/img/roba.jpg" class="rounded-circle" width="140" height="140">
-        <h2>Cosa puoi fare nel sito?</h2>
-        <p>Scopri com'è il tempo in tutte le città del mondo e salva le tue città preferite, in modo da non doverle più cercare e poterle monitorare costantemente</p>
-      </div><!-- /.col-lg-4 -->
-      <div class="col-lg-4">
-        <img data-src="/media/img/login.jpg" class="rounded-circle" width="140" height="140">
-        <h2>Come cominciare ad utilizzare il sito?</h2>
-        <p>Prima di tutto dovrai registrarti (bastano solo una mail ed una password!) e poi potrai cominciare ad esplorare il meteo nel mondo! Clicca qui sotto per registrarti</p>
-        <p><a class="btn btn-secondary" href="/help">Clicca qui &raquo;</a></p>
-    </div><!-- /.col-lg-4 -->
-      <div class="col-lg-4">
-        <img data-src="/media/img/email.jpg" class="rounded-circle" width="140" height="140">
-        <h2>Domande?</h2>
-        <p>Se hai altre domande, non esitare a scriverci una mail</p>
-        <p><a class="btn btn-secondary" href="mailto:indirizzo@email.com">Scrivi una mail &raquo;</a></p>
-      </div><!-- /.col-lg-4 -->
+    <div class="row d-flex align-items-center justify-content-center">
+      <div class="col-lg-6">
+      <h4>Inserisci il nome della città di cui vuoi sapere il meteo</h4>
+      <form class="d-flex" action="/search" method="post">
+        <input class="form-control me-2" type="search" name="ricerca" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
     </div><!-- /.row -->
+    <br><br>
 
 
   </div><!-- /.container -->
@@ -154,6 +141,7 @@
   <input class="form-check-input" type="checkbox" role="switch" id="darkmode" onclick="darkmode()">
   <label class="form-check-label" for="flexSwitchCheckDefault">Abilita DarkMode</label>
 </div>
+
 
 
   <!-- FOOTER -->

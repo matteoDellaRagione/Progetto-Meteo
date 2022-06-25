@@ -57,7 +57,7 @@
             <a class="nav-link active" aria-current="page" href="/aboutus">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" action="/ciao" method="GET" href="/help">Cosa puoi fare</a>
+            <a class="nav-link active" href="/help">Cosa puoi fare</a>
           </li>
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/reg">Accedi/Registrati</a>
@@ -127,26 +127,29 @@
   <div class="container marketing">
 
     <!-- Three columns of text below the carousel -->
-    <div class="row">
-      <div class="col-lg-4">
-        <img data-src="/media/img/roba.jpg" class="rounded-circle" width="140" height="140">
-        <h2>Cosa puoi fare nel sito?</h2>
-        <p>Scopri com'è il tempo in tutte le città del mondo e salva le tue città preferite, in modo da non doverle più cercare e poterle monitorare costantemente</p>
-      </div><!-- /.col-lg-4 -->
-      <div class="col-lg-4">
-        <img data-src="/media/img/login.jpg" class="rounded-circle" width="140" height="140">
-        <h2>Come cominciare ad utilizzare il sito?</h2>
-        <p>Prima di tutto dovrai registrarti (bastano solo una mail ed una password!) e poi potrai cominciare ad esplorare il meteo nel mondo! Clicca qui sotto per registrarti</p>
-        <p><a class="btn btn-secondary" href="/reg">Clicca qui &raquo;</a></p>
-    </div><!-- /.col-lg-4 -->
-      <div class="col-lg-4">
-        <img data-src="/media/img/email.jpg" class="rounded-circle" width="140" height="140">
-        <h2>Domande?</h2>
-        <p>Se hai altre domande, non esitare a scriverci una mail</p>
-        <p><a class="btn btn-secondary" href="mailto:indirizzo@email.com">Scrivi una mail &raquo;</a></p>
-      </div><!-- /.col-lg-4 -->
-    </div><!-- /.row -->
-
+    <main class="form-signin">
+      <form action="/registrazione" method="post">
+        <h1 class="h3 mb-3 fw-normal">Registrazione</h1>
+        
+        <div id="form">
+        <div class="form-floating">
+          <input type="email" class="form-control" id="floatingInput" name="email" placeholder="name@example.com">
+          <label for="floatingInput">Indirizzo email</label>
+        </div>
+        <div class="form-floating">
+          <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Password">
+          <label for="floatingPassword">Password</label>
+        </div>
+      </div>
+    
+        <div class="checkbox mb-3">
+        </div>
+        <button class="w-100 btn btn-lg btn-dark" type="submit">Registrati</button>
+        <p>Hai già un account?</p>
+      </form>  
+      <p><a class="btn btn-secondary" href="/log">Effettua il login &raquo;</a></p>
+    </main>
+   
 
   </div><!-- /.container -->
   <!--Dark mode ?-->

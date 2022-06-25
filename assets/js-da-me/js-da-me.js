@@ -50,6 +50,21 @@ function getMeteo(citta) {
 
 	}
 }
+function view(){
+	console.log(document.documentURI)
+}
+view()
+
+/*function getInput() {
+	if(document.documentURI=="https://localhost:4433/registrazione") {
+		var search = document.getElementById("search")
+		search.addEventListener("onclick", event => {
+			event.preventDefault()
+			console.log("ciao")
+		})
+	}
+}
+getInput();*/
 
 if(window.localStorage.getItem('darkmode')=="true") { 
 	document.body.style.backgroundColor = 'black'
@@ -100,3 +115,4 @@ imgElements.forEach(imageElement => {
   const imageURL = imageElement.getAttribute('data-src')
   ImageLoaderWorker.postMessage(imageURL)
 })
+
