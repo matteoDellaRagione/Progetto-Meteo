@@ -1,28 +1,25 @@
 
 const express = require('express');
-const bodyparser = require('body-parser')
-var https = require('https'); //fai install
+var https = require('https'); 
 var fs = require('fs');
 
 const app = express();
- //Configure dotenv package
+
  require("dotenv").config();
  require('./router/main')(app);
 
 app.set('view engine', 'ejs')
-const port = 8080;
+const port = 4433;
 
 var options = {
     key: fs.readFileSync(__dirname+'/certificate/key.pem'),
     cert: fs.readFileSync(__dirname+'/certificate/cert.pem')
   };
 
-//Express static file module
 app.use(express.static(__dirname + '/assets/'));
 
-https.createServer(options, app).listen(4433);
+https.createServer(options, app).listen(port);
 
-app.listen(port);
-console.log('Server started at http://localhost:' + port);
+console.log('Server started at https://localhost:' + port);
 
 

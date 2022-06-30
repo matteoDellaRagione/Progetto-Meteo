@@ -4,39 +4,23 @@
 	month: null,
 	year: null
 }
-//window.localStorage.setItem("darkmode",a);
-
-//document.body.style.backgroundColor = "black";)
-//if(window.localStorage.getItem("darkmode",(darkSelector.darkMode)=="true"))
-	//document.body.style.backgroundColor = "black";
-//window.localStorage.setItem("darkmode",darkSelector.darkMode);
+if(document.getElementById("gi"))
+	document.getElementById("gi").addEventListener('click',getInfo)
 
 function darkmode(){
-	var currentDate = new Date();
 	if (document.getElementById('darkmode').checked){
 		document.body.style.backgroundColor = "black";
 		document.body.style.color = '#faf9f9'
 		darkSelector.darkMode = true
-		darkSelector.day = currentDate.getDate()
-		darkSelector.month = currentDate.getMonth() + 1
-		darkSelector.year = currentDate.getFullYear()
-		console.log(darkSelector.darkMode);
-		console.log(darkSelector.day)
-		window.localStorage.setItem("darkmode",darkSelector.darkMode);
+		window.sessionStorage.setItem("darkmode",darkSelector.darkMode);
 		if(document.getElementById('floatingInput')) {
-			console.log(document.getElementById('floatingInput'))
 			document.getElementById('form').style.color = "black"
 		}
 	}
 	else {document.body.style.backgroundColor = "white";
 		  document.body.style.color = '#22333b'
 		 darkSelector.darkMode = false;
-		 darkSelector.day = null
-		 darkSelector.month = null
-		 darkSelector.year = null
-		 console.log(darkSelector.darkMode);
-		 console.log(darkSelector.day)
-		 window.localStorage.setItem("darkmode",darkSelector.darkMode);
+		 window.sessionStorage.setItem("darkmode",darkSelector.darkMode);
 	}
 }
 
@@ -50,31 +34,43 @@ function getMeteo(citta) {
 
 	}
 }
-function view(){
-	console.log(document.documentURI)
-}
-view()
 
-/*function getInput() {
-	if(document.documentURI=="https://localhost:4433/registrazione") {
-		var search = document.getElementById("search")
-		search.addEventListener("onclick", event => {
-			event.preventDefault()
-			console.log("ciao")
-		})
-	}
+//onclick funzione
+function getInfo(){
+	var obj = document.getElementById("search").value
+console.log(document.getElementById("search").value)
+$.ajax({
+	method: "post",
+	dataType:"json",
+	// specifico la URL della risorsa da contattare
+	url: "/search",
+	//contentType: "application/json; charset=utf-8",
+	// imposto l'azione in caso di successo
+	success: (risposta)=>{
+	//visualizzo il contenuto del file nel div htmlm
+		alert(risposta)
+		console.log(risposta.info)
+	  $("#dati-file").attr("src","data:image/jpg;base64,"+risposta.info); //classe dell'immagine
+	},
+	error: function(){
+		alert(errore)
+		console.log("errore")
+	},
+	data: { info: obj }
+})
+//preventDefault()
 }
-getInput();*/
 
-if(window.localStorage.getItem('darkmode')=="true") { 
+
+if(window.sessionStorage.getItem('darkmode')=="true") { 
 	document.body.style.backgroundColor = 'black'
 	document.body.style.color = '#faf9f9'
 	document.getElementById('darkmode').checked = true
 	if(document.getElementById('floatingInput')) {
-		console.log(document.getElementById('floatingInput'))
 		document.getElementById('form').style.color = "black"
 	}	
 }
+
 const api = new Worker("js-da-me/api.js");
 api.onmessage = function(e) {
 	console.log(e.data.dubai)
@@ -88,23 +84,19 @@ const ImageLoaderWorker = new Worker('js-da-me/images.js')
 const imgElements = document.querySelectorAll('img[data-src]')
 
 ImageLoaderWorker.addEventListener('message', event => {
-	// Grab the message data from the event
+	// Prendi i dati
 	const imageData = event.data
   
-	// Get the original element for this image
+	// Ottendo l'elemento originale relativo all'immagine
 	const imageElement = document.querySelector(`img[data-src='${imageData.imageURL}']`)  
-	// We can use the `Blob` as an image source! We just need to convert it
-	// to an object URL first
+	//Per utilizzare il blob come immagine lo trasformo in url
 	const objectURL = URL.createObjectURL(imageData.blob)
   
-	// Once the image is loaded, we'll want to do some extra cleanup
 	imageElement.onload = () => {
-	  // Let's remove the original `data-src` attribute to make sure we don't
-	  // accidentally pass this image to the worker again in the future
+	  // Elimino data-src per evitare di riutilizzarlo
 	  imageElement.removeAttribute("data-src")
   
-	  // We'll also revoke the object URL now that it's been used to prevent the
-	  // browser from maintaining unnecessary references
+	  // revoco l'url perchè non serve più
 	  URL.revokeObjectURL(objectURL)
 	}
   
@@ -115,4 +107,7 @@ imgElements.forEach(imageElement => {
   const imageURL = imageElement.getAttribute('data-src')
   ImageLoaderWorker.postMessage(imageURL)
 })
+
+
+
 

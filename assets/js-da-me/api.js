@@ -6,9 +6,12 @@ async function getCordinatesFromName(name) {
 	console.log(lat)
 	console.log(long)
 }
+
 async function initialize() {
+
 	var response = await fetch("https://api.openweathermap.org/data/2.5/weather?lat=45,46362&lon=9,188116&units=metric&appid=e21c453d380f0ca1bc5d071698438e15",
 	{method:"GET"});
+	
 	let jsonObj1 = await response.json();
 	response = await fetch("https://api.openweathermap.org/data/2.5/weather?lat=41,3875&lon=2,16835&units=metric&appid=e21c453d380f0ca1bc5d071698438e15",
 	{method:"GET"});
@@ -24,7 +27,25 @@ async function initialize() {
 	self.postMessage(response)
 
 }
-self.onmessage = getCordinatesFromName("firenze")
+
+async function getCitta(citta) {
+	const api_key = "AIzaSyAJLoKPEUiU-NhvVPCvPozei2rMOf7_m1o"
+	var response = await fetch("https://maps.googleapis.com/maps/api/place/findplacefromtext/json?fields=photos&input="+citta+"&inputtype=textquery&key="+api_key,{method:"GET",headers: {
+		'Content-Type': 'application/json',
+  }, mode: 'no-cors'});
+  console.log(response)
+	let c = await response.json();
+	
+	//var response = await fetch("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference="+foto+"&key="+api_key)
+}
+//self.onmessage = getCordinatesFromName("firenze")
+
+
 self.onmessage = initialize()
+
+
+//self.onmessage = getCitta("Milano")
+
+
 
 

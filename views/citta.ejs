@@ -60,7 +60,7 @@
             <a class="nav-link active" method="GET" href="/help">Cosa puoi fare</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Benvenuto, <%= nome %></a>
+            <a class="nav-link active" aria-current="page" href="#">Benvenuto,<%= nome %></a>
           </li>
         </ul>
       </div>
@@ -125,20 +125,20 @@
     <!-- Three columns of text below the carousel -->
     <div class="row d-flex align-items-center justify-content-center">
       <div class="col-lg-6">
-      <h4>Inserisci il nome della città di cui vuoi sapere il meteo</h4>
-      <form class="d-flex">
+      <h4>Inserisci il nome della città di cui lol vuoi sapere il meteo</h4>
+      <form class="d-flex" action="/search" method="post">
         <input class="form-control me-2" id="search" type="search" name="ricerca" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" id="gi">Search</button>
+        <button class="btn btn-outline-success" type="submit" onclick = "getInfo()">Search</button>
       </form>
     </div>
-    </div><!-- /.row -->
+    </div><!-- /.value="<%= nome %>"" -->
     <br><br>
+    <p><%= citta %></p>
     <img id="dati-file">
 
 
   </div><!-- /.container -->
   <!--Dark mode ?-->
-
 <div class="form-check form-switch">
   <input class="form-check-input" type="checkbox" role="switch" id="darkmode" onclick="darkmode()">
   <label class="form-check-label" for="flexSwitchCheckDefault">Abilita DarkMode</label>
@@ -158,7 +158,6 @@
 
       
   </body>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="js-da-me/js-da-me.js"</script></script>  <!-- togli da assets -->
-  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </html>
