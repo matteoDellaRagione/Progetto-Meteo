@@ -1,3 +1,5 @@
+
+
  darkSelector = {
 	darkMode: false,
 	day: null,
@@ -6,6 +8,11 @@
 }
 if(document.getElementById("gi"))
 	document.getElementById("gi").addEventListener('click',getInfo)
+if(document.getElementById("search"))
+	document.getElementById("search").addEventListener('submit',function(event){
+		event.preventDefault()
+	})	
+
 
 function darkmode(){
 	if (document.getElementById('darkmode').checked){
@@ -25,14 +32,14 @@ function darkmode(){
 }
 
 function getMeteo(citta) {
-	console.log(citta.weather[0].main)	
 	switch(citta.weather[0].main){
 		case 'Clouds': return 'Nuvoloso';
 		case 'Clear': return 'Soleggiato';
 		case 'Rain': return 'Piovoso';
 		default: return 'Nevoso'
-
 	}
+
+
 }
 
 //onclick funzione
@@ -42,23 +49,18 @@ console.log(document.getElementById("search").value)
 $.ajax({
 	method: "post",
 	dataType:"json",
-	// specifico la URL della risorsa da contattare
 	url: "/search",
-	//contentType: "application/json; charset=utf-8",
-	// imposto l'azione in caso di successo
 	success: (risposta)=>{
-	//visualizzo il contenuto del file nel div htmlm
-		alert(risposta)
-		console.log(risposta.info)
-	  $("#dati-file").attr("src","data:image/jpg;base64,"+risposta.info); //classe dell'immagine
-	},
-	error: function(){
-		alert(errore)
-		console.log("errore")
+		console.log(risposta.meteo)
+	  $("#dati-file").attr("src","data:image/jpg;base64,"+risposta.image); 
+	  $("#meteo").text(getMeteo(risposta.meteo))
+	  $("#temperatura").text("Temperatura: "+risposta.temp+"°")
+
+
 	},
 	data: { info: obj }
 })
-//preventDefault()
+
 }
 
 

@@ -126,14 +126,20 @@
     <div class="row d-flex align-items-center justify-content-center">
       <div class="col-lg-6">
       <h4>Inserisci il nome della città di cui vuoi sapere il meteo</h4>
-      <form class="d-flex">
+      <form class="d-flex" onsubmit="return false">
         <input class="form-control me-2" id="search" type="search" name="ricerca" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" id="gi">Search</button>
+        <button class="btn btn-outline-success" type='button' id="gi">Search</button>
       </form>
     </div>
     </div><!-- /.row -->
     <br><br>
-    <img id="dati-file">
+    <div class="row d-flex align-items-center justify-content-center">
+      <div class="col-lg-3">
+        <img id="dati-file"class="rounded-circle" width="340" height="340">
+        <h4 id="temperatura"></h4>
+        <h4 id="meteo"></h4>
+      </div>
+    </div>
 
 
   </div><!-- /.container -->

@@ -31,27 +31,17 @@ module.exports=function(app) {
     });
     
     app.post('/search', bodyparser.urlencoded(), (req,res)=> {
-            console.log("qui")
-            console.log(req.body)
             getCitta(req.body.info).then(results=>{
-            console.log(results.data)
-            //console.log(results.data.candidates[0].photos[0].photo_reference)
-            getFoto(results.data.candidates[0].photos[0].photo_reference).then(result=>{
-                //console.log(result)
-               //console.log(base64data)
-               //req.body.info
-                    res.json({data:'success',info:result})
-                    res.end()
-                    //console.log("result:")
-                    //console.log(result)
-                    //res.render('citta.ejs', {nome:req.body.nome, citta:req.body.ricerca,foto:result});
+            console.log()
+            getFoto(results.data.candidates[0].photos[0].photo_reference,results.data.candidates[0].geometry.location.lat,
+                results.data.candidates[0].geometry.location.lng).then(result=>{
+                    res.json({data:'success',image:result.image,temp:result.temp,meteo:result.meteo})
                }
                 
             ).catch(err =>  {
                 console.log("errore: "+err)
                })
             })
-           // console.log(foto)
     })
 
     app.post('/registrazione', bodyparser.urlencoded(), (req,res) => {
@@ -121,42 +111,31 @@ module.exports=function(app) {
 
 }
 async function getCitta(citta) {
-	//const api_key = "AIzaSyAJLoKPEUiU-NhvVPCvPozei2rMOf7_m1o"
     const api_key="AIzaSyCXHuJ7TnhYgdiGYT4_dawtc9awUW8hvIg"
-	/*var response = await axios.get("https://maps.googleapis.com/maps/api/place/findplacefromtext/json?fields=photos&input="+citta+"&inputtype=textquery&key="+api_key,{method:"GET",headers: {
-		'Content-Type': 'application/json',
-  }, mode: 'no-cors'});*/
+	
   try{
     console.log("https://maps.googleapis.com/maps/api/place/findplacefromtext/json?fields=photos,geometry&input="+citta+"&inputtype=textquery&key="+api_key)
-  let response = await axios.get("https://maps.googleapis.com/maps/api/place/findplacefromtext/json?fields=photos&input="+citta+"&inputtype=textquery&key="+api_key)
-    //'Content-Type': 'application/jpg',}})
+  let response = await axios.get("https://maps.googleapis.com/maps/api/place/findplacefromtext/json?fields=photos,geometry&input="+citta+"&inputtype=textquery&key="+api_key)
     return Promise.resolve(response)
     }catch(error) {
         console.log(error)
         return Promise.reject()
     }
-	//let c = await response.json();
-	
-	//var response = await fetch("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference="+foto+"&key="+api_key)
 }
-async function getFoto(foto){
-    //const api_key = "AIzaSyAJLoKPEUiU-NhvVPCvPozei2rMOf7_m1o"
+async function getFoto(foto,lat,long){
+
     const api_key="AIzaSyCXHuJ7TnhYgdiGYT4_dawtc9awUW8hvIg  "
     try {
 
     let response = await axios.get("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference="+foto+"&key="+api_key,{responseType:'arraybuffer'})
     
-       console.log("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference="+foto+"&key="+api_key)
        let image = Buffer.from(response.data, 'binary').toString('base64')
-    return Promise.resolve(image)
+       response = await axios.get("https://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+long+"&units=metric&appid=e21c453d380f0ca1bc5d071698438e15")
+       var obj = { image:image,temp:response.data.main.temp,meteo:response.data}
+    return Promise.resolve(obj)
     }catch(error) {
         console.log(error)
         return Promise.reject
     }
 } 
-/*getCitta("Milano").then(results=>{
-    console.log(results.data.candidates[0].photos[0].photo_reference)
-    getFoto(results.data.candidates[0].photos[0].photo_reference).then(result=>{
-        console.log(result.data)
-    })
-})*/
+
