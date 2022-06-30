@@ -64,24 +64,6 @@ module.exports=function(app) {
         }).catch(error => {console.log(error)}) 
     })
 
-    /*app.get('/registrazione',bodyparser.urlencoded(), (req,res)=> {
-        console.log("qui")
-        console.log(req.body)
-        getCitta(req.body.info).then(results=>{
-        console.log(results)
-        //console.log(results.data.candidates[0].photos[0].photo_reference)
-        getFoto(results.data.candidates[0].photos[0].photo_reference).then(result=>{
-            //console.log(result)
-           //console.log(base64data)
-           //req.body.info
-                res.json(result)
-                //res.render('citta.ejs', {nome:req.body.nome, citta:req.body.ricerca,foto:result});
-           }
-            
-        )
-        })
-       // console.log(foto)
-})*/
     checkAuth = async (email, password) => {
         try{
             await mongoClient.connect()

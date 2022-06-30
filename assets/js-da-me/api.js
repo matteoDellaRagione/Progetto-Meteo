@@ -36,15 +36,11 @@ async function getCitta(citta) {
   console.log(response)
 	let c = await response.json();
 	
-	//var response = await fetch("https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference="+foto+"&key="+api_key)
 }
-//self.onmessage = getCordinatesFromName("firenze")
 
 
 self.onmessage = initialize()
 
-
-//self.onmessage = getCitta("Milano")
 
 
 
